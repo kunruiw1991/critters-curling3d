@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Critter Ice Curling 3D: Penguin Glacier Knockout!</title>
+  <link rel="icon" type="image/jpeg" href="icons/catnap.jpg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- 3D WebGL Canvas Container -->
+  <div id="canvas-container" aria-label="3D Glacier Curling Rink"></div>
+
+  <!-- Screen Flash & Knockout Impact Overlay -->
+  <div id="fx-flash" class="fx-flash"></div>
+
+  <!-- TITLE / SELECT SCREEN (100% Visual Icon-First UI) -->
+  <section id="screen-title" class="screen active">
+    <div class="snow-backdrop"></div>
+    <div class="title-card">
+      <div class="title-emblem-row">
+        <span class="emblem-bounce">🐧</span>
+        <span class="emblem-main">🥌</span>
+        <span class="emblem-bounce delay-1">🎯</span>
+        <span class="emblem-bounce delay-2">❄️</span>
+      </div>
+
+      <!-- 8 Smiling Critters Selector Grid -->
+      <div class="section-icon-header">
+        <span class="badge-pill">🐾 8</span>
+      </div>
+      <div id="critter-grid" class="critter-grid" role="listbox" aria-label="Select Critter"></div>
+
+      <!-- 8 Glacier Rinks Stage Selector Grid -->
+      <div class="section-icon-header">
+        <span class="badge-pill">🏔️ 8</span>
+        <span id="total-stars-badge" class="badge-pill gold">⭐ 0 / 24</span>
+      </div>
+      <div id="stage-grid" class="stage-grid" role="listbox" aria-label="Select Glacier Rink"></div>
+
+      <!-- Big Play Button -->
+      <div class="title-actions">
+        <button id="btn-play" class="btn-jumbo-play" aria-label="Play Game">
+          <span class="play-icon">🥌</span>
+          <span class="play-arrow">▶️</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 100% ZERO-TEXT VISUAL COCKPIT HUD -->
+  <section id="screen-hud" class="screen">
+    <div class="hud-top-bar">
+      <button id="btn-hud-home" class="hud-circle-btn" aria-label="Home">🏠</button>
+
+      <!-- Stage & End Wave Indicator (Pure Icons + Numbers) -->
+      <div class="hud-stage-pill">
+        <span id="hud-stage-icon">🐧</span>
+        <span id="hud-stage-num">1/8</span>
+        <span class="hud-divider">•</span>
+        <span id="hud-stones-row" class="hud-stones-row">🥌🥌🥌</span>
+      </div>
+
+      <!-- Live 5-Critter Leaderboard Strip -->
+      <div id="hud-rank-strip" class="hud-rank-strip"></div>
+
+      <!-- Rainbow Fever Gauge -->
+      <div class="hud-fever-wrap" title="Rainbow Fever">
+        <span class="fever-icon">🌈</span>
+        <div class="fever-bar-track">
+          <div id="hud-fever-fill" class="fever-bar-fill"></div>
+        </div>
+      </div>
+
+      <button id="btn-audio" class="hud-circle-btn" aria-label="Toggle Sound">🔊</button>
+    </div>
+
+    <!-- Center Visual Bullseye Distance & Curl Reticle -->
+    <div id="hud-house-radar" class="hud-house-radar">
+      <div class="radar-ring ring-blue"></div>
+      <div class="radar-ring ring-white"></div>
+      <div class="radar-ring ring-red"></div>
+      <div class="radar-ring ring-gold"></div>
+      <div id="radar-dots" class="radar-dots"></div>
+    </div>
+
+    <!-- Floating Emoji Callout Toast -->
+    <div id="hud-toast" class="hud-toast">🎯 +100</div>
+
+    <!-- Bottom Touch Steering + 3 Power Pedals -->
+    <div class="hud-bottom-cockpit">
+      <div class="steer-cluster">
+        <button id="btn-curl-left" class="steer-btn" aria-label="Curl Left">⬅️</button>
+        <button id="btn-curl-right" class="steer-btn" aria-label="Curl Right">➡️</button>
+      </div>
+
+      <div class="pedals-cluster">
+        <button id="pedal-magnet" class="power-pedal pedal-1" data-pedal="0" aria-label="Bullseye Magnet Curl">
+          <span class="pedal-key">1</span>
+          <span class="pedal-emoji">🌪️</span>
+          <span class="pedal-sub">🎯</span>
+          <div class="pedal-cooldown"></div>
+        </button>
+
+        <button id="pedal-sweep" class="power-pedal pedal-2" data-pedal="1" aria-label="Ice Broom Turbo Sweep">
+          <span class="pedal-key">2</span>
+          <span class="pedal-emoji">⚡</span>
+          <span class="pedal-sub">🧹</span>
+          <div class="pedal-cooldown"></div>
+        </button>
+
+        <button id="pedal-knockout" class="power-pedal pedal-3" data-pedal="2" aria-label="Heavy Granite Knockout Stone">
+          <span class="pedal-key">3</span>
+          <span class="pedal-emoji">💥</span>
+          <span class="pedal-sub">🥌</span>
+          <div class="pedal-cooldown"></div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PODIUM / RESULTS MODAL (Strict Top-3 Qualification) -->
+  <section id="screen-results" class="screen modal-overlay">
+    <div class="results-card">
+      <div id="results-banner-icon" class="results-banner-icon">🏆</div>
+      <div id="results-stars-row" class="results-stars-row">⭐⭐⭐</div>
+
+      <!-- 5-Critter Podium Standings -->
+      <div id="results-podium" class="results-podium"></div>
+
+      <div class="results-actions">
+        <button id="btn-results-home" class="btn-action secondary" aria-label="Menu">🏠</button>
+        <button id="btn-retry-stage" class="btn-action retry" aria-label="Retry Stage">🔄</button>
+        <button id="btn-next-stage" class="btn-action next" aria-label="Next Stage">▶️</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
