@@ -3098,10 +3098,9 @@
 
         if (this.trauma > 0.001) {
           const s = this.trauma * this.trauma;
-          const t = this.matchTime * 42;
-          this.camera.position.x += Math.sin(t * 1.13) * 0.48 * s;
-          this.camera.position.y += Math.cos(t * 1.71) * 0.34 * s;
-          this.camera.rotation.z += Math.sin(t * 2.29) * 0.032 * s;
+          const t = this.matchTime * 24;
+          this.camera.position.x += Math.sin(t * 1.13) * 0.10 * s;
+          this.camera.position.y += Math.cos(t * 1.71) * 0.08 * s;
         }
 
         const cz = this.camera.position.z;
